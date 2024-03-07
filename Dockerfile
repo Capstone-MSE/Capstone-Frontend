@@ -1,27 +1,32 @@
-# nginx 이미지를 사용합니다. 뒤에 tag가 없으면 latest 를 사용합니다.
-FROM nginx
+# Node.js 이미지를 기반으로 빌드 환경 설정
+FROM node:latest as build
 
+# 작업 디렉토리 설정
+WORKDIR /app
 
-# root 에 app 폴더를 생성
-RUN mkdir /app
+# package.json을 복사하여 의존성 설치 진행
+COPY package.json ./
 
-# work dir 고정
-WORKDIR /a
+# 의존성 설치
+RUN npm install
 
-# work dir 에 build 폴더 생성 /app/build
-RUN mkdir ./build
+# 소스 코드를 복사
+COPY . ./
 
-# host pc의 현재경로의 build 폴더를 workdir 의 build 폴더로 복사
-ADD ./build ./build
+# 리액트 애플리케이션 빌드
+RUN npm run build
 
-# nginx 의 default.conf 를 삭제
+# Nginx 이미지를 기반으로 런타임 환경 설정
+FROM nginx:latest
+
+# Nginx 설정 파일을 덮어씌우기 위해 기존의 default.conf 파일을 삭제
 RUN rm /etc/nginx/conf.d/default.conf
 
-# host pc 의 nginx.conf 를 아래 경로에 복사
-COPY ./nginx.conf /etc/nginx/conf.d
+# 빌드된 리액트 애플리케이션을 Nginx가 제공하는 정적 파일 경로로 복사
+COPY --from=build /app/build /usr/share/nginx/html
 
-# 80 포트 오픈
+# 80 포트 열기
 EXPOSE 80
 
-# container 실행 시 자동으로 실행할 command. nginx 시작함
+# Nginx 실행
 CMD ["nginx", "-g", "daemon off;"]
