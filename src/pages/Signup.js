@@ -1,9 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-function SignUp() {
+function Signup() {
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [signupToken, setSignupToken] = useState('');
+
+  useEffect(() => {
+    // 회원가입 토큰 요청
+    const fetchSignupToken = async () => {
+      try {
+        const response = await fetch('http://mobilesystems.site:8081/user/signup-token');
+        const data = await response.json();
+        setSignupToken(data.signupToken);
+      } catch (error) {
+        console.error('회원가입 토큰 요청 실패:', error);
+      }
+    };
+
+    fetchSignupToken();
+  }, []);
 
   const handleNameChange = (event) => {
     setName(event.target.value);
@@ -21,14 +37,20 @@ function SignUp() {
     event.preventDefault();
 
     try {
-      await fetch('http://localhost:8080/user/signup', {
+      // 회원가입 요청
+      const response = await fetch(`http://mobilesystems.site:8081/user/${signupToken}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({ name, username, password })
       });
-      console.log('회원가입 성공');
+
+      if (response.ok) {
+        console.log('회원가입 성공');
+      } else {
+        console.error('회원가입 실패:', response.statusText);
+      }
     } catch (error) {
       console.error('회원가입 실패:', error);
     }
@@ -77,4 +99,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default Signup;
