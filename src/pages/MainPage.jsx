@@ -1,10 +1,9 @@
 import React from 'react';
-import styles from './MainPage.module.css'; // CSS 모듈을 가져옵니다.
+import styles from './MainPage.module.css'; 
 import { useNavigate } from 'react-router-dom';
 import upload_icon from '../img/upload_icon.png';
 import download_icon from '../img/download_icon.png'
 
-import FileUploadButton from '../components/FileUploadButton';
 
 const MainPage = () => {
     const navigate = useNavigate();
@@ -14,7 +13,7 @@ const MainPage = () => {
 
     return (
         <div className={styles.container}>
-          <h1>           Reader.</h1>
+          <h1>Reader.</h1>
           <div className={styles.card}>
             <div className={styles.iconContainer}>
               <img src={upload_icon} alt="Upload" className={styles.icon} />
