@@ -1,0 +1,56 @@
+.container {
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+}
+
+.card {
+    border: 5px solid #000;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px;
+    display: inline-block;
+    vertical-align: top;
+    width: 800px;
+    height: 600px;
+}
+
+.icon-container {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.icon {
+    width: 200px; /* 아이콘 크기에 따라 조절 */
+    height: auto;
+}
+
+.btn {
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.learn {
+    background-color: #ff9190; /* 학습하기 버튼 색상 */
+}
+
+.extract {
+    background-color: #ff9190; /* 추출하기 버튼 색상 */
+}
+
+h1 {
+    font-size: 50px;
+    text-align: left;
+    padding: 20px;
+    padding-left: 100px;
+    margin-bottom: 30px;
+}
+
+p {
+    margin: 5px 0;
+}
