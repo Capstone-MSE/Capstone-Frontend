@@ -1,14 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 
-const KeyValue = ({ AiTextData, coloredIndexes, onChange }) => {
+const KeyValue = ({ AiTextData, coloredIndexes, onChange, coloredBbox }) => {
     const [inputValue, setInputValue] = useState('');
     const [key, setKey] = useState('');
     const [keyValuePair, setKeyValuePair] = useState([]);
+    const [value, setValue] = useState('');
+
 
 
     const sortedIndexes = [...coloredIndexes].sort((a, b) => a - b);
-    const value = sortedIndexes.map(index => AiTextData[index]).join(' ');
+    // const value = sortedIndexes.map(index => AiTextData[index]).join(' ');
+
+    const calculateValue = () => {
+        return sortedIndexes.map(index => AiTextData[index]).join(' ');
+      };
+
+      useEffect(() => {
+        setValue(calculateValue());
+      }, [coloredIndexes, AiTextData]);
+    
+      
 
     const handleChange = (event) => {
         setInputValue(event.target.value);
@@ -19,31 +31,47 @@ const KeyValue = ({ AiTextData, coloredIndexes, onChange }) => {
     };
     
     const addPair = () => {
-        setKeyValuePair(prevState => [...prevState, { key: {key}, value: {value} }]);
+        setKeyValuePair(prevState => [...prevState, { key, value }]);
+        setKey('');
+        setInputValue('');
+        setValue('');
+        coloredBbox.current = [];
         console.log(keyValuePair);
     };
 
-  return (
-    <div>
+      
+    return (
+        <div>
         <div>
             <input 
             type="text"
             value={inputValue}
-            onChange={handleChange} />
+            onChange={handleChange} 
+            />
             <button onClick={submit}>완료</button> 
         </div>
         <div>
-           {key && <input
-            type="text"
-            value={value}
-            onChange={onChange}
-         />}
+            {key && (
+                <input
+                type="text"
+                value={value}
+                onChange={onChange}
+                />
+            )}
             {key && <button onClick={addPair}>더하기</button>}
         </div>
-        {key && <p>Key: {key}</p>} 
-    </div>
-    
-  );
-};
+        {key && <p>Key: {key}</p>}
+        {key && value && <p> Value: {value}</p>}
+        {keyValuePair.length > 0 && (
+            <div>
+                {keyValuePair.map((pair, index) => (
+                    <p key={index}>Key: {pair.key}, Value: {pair.value}</p>
+                ))}
+            </div>
+        )}
+        </div>
+    );
+    };
+      
 
 export default KeyValue;

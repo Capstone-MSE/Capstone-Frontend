@@ -43,14 +43,30 @@
     background-color: #ff9190; 
 }
 
-h1 {
-    font-size: 50px;
-    text-align: left;
-    padding: 20px;
-    padding-left: 100px;
-    margin-bottom: 30px;
-}
+
 
 p {
     margin: 5px 0;
+}
+
+.header {
+    display: flex; 
+    justify-content: space-between; 
+    width: 100%;
+    align-items: center;
+    flex-wrap: nowrap;
+    background-color: antiquewhite;
+    border: #000;
+}
+
+h1 {
+    font-size: 80px; 
+    text-align: left;
+    margin: 0; 
+    padding: 0px; 
+    padding-left: 80px;
+}
+
+.buttons button {
+    margin-left: 10px; 
 }

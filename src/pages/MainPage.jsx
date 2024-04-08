@@ -7,20 +7,32 @@ import download_icon from '../img/download_icon.png'
 
 const MainPage = () => {
     const navigate = useNavigate();
-    const handleLearnClick = () => {
-        navigate('/learn'); 
+    const learnClick = () => {
+      navigate('/learn'); 
       };
+    const logInClick = () => {
+      navigate('/login');
+    };
+    const signUpClick = () => {
+      navigate('/signup');
+    };
 
-    return (
+      return (
         <div className={styles.container}>
-          <h1>Reader.</h1>
+          <div className="header">
+            <h1>Reader</h1>
+            <div className="buttons">
+              <button type="button" onClick={logInClick}>로그인</button>
+              <button type="button" onClick={signUpClick}>회원가입</button>
+            </div>
+          </div>
           <div className={styles.card}>
             <div className={styles.iconContainer}>
               <img src={upload_icon} alt="Upload" className={styles.icon} />
             </div>
             <p>첫 사용이신가요?</p>
             <p>데이터화할 이미지를 업로드해 학습을 진행해주세요.</p>
-            <button className={`${styles.btn} ${styles.learn}`} onClick={handleLearnClick}>학습하기</button>
+            <button className={`${styles.btn} ${styles.learn}`} onClick={learnClick}>학습하기</button>
           </div>
           <div className={styles.card}>
             <div className={styles.iconContainer}>
@@ -31,7 +43,7 @@ const MainPage = () => {
           </div>
         </div>
       );
-    };
+    }      
     
 
 export default MainPage;
