@@ -79,7 +79,6 @@ function Modal({ isOpen, onClose, AiData}) {
 
               console.log(coloredBbox.current);
               
-              //여기에 index를 반환하는 코드 삽입. content.text[index]를 이후 사용할 예정.
               
               
             }

@@ -17,7 +17,7 @@ function Login() {
 
     try {
       // 로그인 요청
-      const response = await fetch(`http://mobilesystems.site:8081/user/login`, {
+      const response = await fetch(`http://mobilesystems.site:8081/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -26,7 +26,9 @@ function Login() {
       });
 
       if (response.ok) {
-        console.log('로그안 성공');
+        const data = await response.json();
+        localStorage.setItem('authToken', data.token);
+        console.log('로그인 성공:', data);
       } else {
         console.error('로그인 실패:', response.statusText);
       }
