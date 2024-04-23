@@ -4,6 +4,16 @@ import { useNavigate } from 'react-router-dom';
 import upload_icon from '../img/upload_icon.png';
 import download_icon from '../img/download_icon.png'
 
+import Chatbot from 'react-chatbot-kit'; 
+import 'react-chatbot-kit/build/main.css';
+
+import config from "../chatbot/config";
+import MessageParser from '../chatbot/MessageParser';
+import ActionProvider from '../chatbot/ActionProvider';
+
+import './chatbot.css';
+
+
 
 const MainPage = () => {
     const navigate = useNavigate();
@@ -41,6 +51,11 @@ const MainPage = () => {
             <p>이미지를 통해 데이터를 추출하세요.</p>
             <button className={`${styles.btn} ${styles.extract}`} onClick={() => navigate('/extract')}>추출하기</button>
           </div>
+          <Chatbot
+            config={config}
+            messageParser={MessageParser}
+            actionProvider={ActionProvider}
+          />
         </div>
       );
     }      
