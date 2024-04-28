@@ -26,9 +26,13 @@ function Login() {
       });
 
       if (response.ok) {
+<<<<<<< Updated upstream:src/pages/Login.jsx
         const data = await response.json();
         localStorage.setItem('authToken', data.token);
         console.log('로그인 성공:', data);
+=======
+        console.log('로그인 성공');
+>>>>>>> Stashed changes:src/pages/Login.js
       } else {
         console.error('로그인 실패:', response.statusText);
       }
