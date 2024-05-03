@@ -1,7 +1,7 @@
 import styles from './Modal.module.css';
 import React, { useState, useRef, useEffect } from 'react';
 import KeyValue from './KeyValue';
-import { BeatLoader } from 'react-spinners';
+import close_icon from '../img/close.png';
 
 
 function Modal({ isOpen, onClose, AiData}) {
@@ -112,7 +112,7 @@ function Modal({ isOpen, onClose, AiData}) {
               <KeyValue AiTextData={AiData.content.text} coloredIndexes={coloredBbox.current} value={value} onChange={handleChange} coloredBbox={coloredBbox}/>
           </div>
           <div>
-             <button className={styles.closeButton} onClick={onClose}>닫기</button>
+             <button className={styles.closeButton} onClick={onClose}><img src={close_icon} alt="닫기" /></button>
           </div>
         </div>
       </div>

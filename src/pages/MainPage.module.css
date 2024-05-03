@@ -1,3 +1,10 @@
+@font-face {
+    font-family: 'KimjungchulMyungjo-Bold';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/KimjungchulMyungjo-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
 .container {
     font-family: 'Arial', sans-serif;
     text-align: center;
@@ -5,9 +12,11 @@
 
 .card {
     border: 5px solid #000;
+    background-color: white;
     border-radius: 10px;
     padding: 20px;
     margin: 10px;
+    margin-top: 210px;
     display: inline-block;
     vertical-align: top;
     width: 800px;
@@ -21,6 +30,7 @@
 }
 
 .icon {
+    margin: 50px;
     width: 200px;
     height: auto;
 }
@@ -29,20 +39,40 @@
     border: none;
     border-radius: 20px;
     padding: 10px 20px;
-    color: white;
+    color: #000;
     font-weight: bold;
     cursor: pointer;
-    margin-top: 10px;
+    margin-top: 40px;
+    background-color: #e9e9e9;
 }
 
-.learn {
-    background-color: #ff9190;
+.loginbtn{
+    position: fixed;
+    top: 100px;
+    right: 320px;
+    border-radius: 20px;
+    padding: 10px 20px;
+    border: 3px solid #000;
+    border-radius: 20px;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #ffffff;
 }
 
-.extract {
-    background-color: #ff9190; 
+.signbtn{
+    position: fixed;
+    top: 100px;
+    right: 220px;
+    border-radius: 20px;
+    padding: 10px 20px;
+    border: 3px solid #000;
+    border-radius: 20px;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #ffffff;
 }
-
 
 
 p {
@@ -60,13 +90,16 @@ p {
 }
 
 h1 {
-    font-size: 80px; 
+    font-family: 'KimjungchulMyungjo-Bold';
+    font-size: 70px; 
     text-align: left;
-    margin: 0; 
-    padding: 0px; 
-    padding-left: 80px;
 }
 
-.buttons button {
-    margin-left: 10px; 
+.mainbtn {
+    position: fixed;
+    padding-bottom: 40%;
+    right: 78%;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
 }

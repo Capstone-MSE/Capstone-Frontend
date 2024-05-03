@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { BeatLoader } from 'react-spinners';
 import Modal from './Modal';
+import styles from './FileUploadButton.module.css';
  
 const serverURL = 'http://100.25.242.208:8080/';
 
@@ -9,6 +10,9 @@ function FileUploadButton() {
   const [aiResponse, setAiResponse] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [reopen, setReopen] = useState(false);
+  const [selectedFileName, setSelectedFileName] = useState('');
+
+  const fileInputRef = useRef(null);
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -17,15 +21,12 @@ function FileUploadButton() {
   const reopenButton = () => {
     if (reopen){
       return <div>
-        <button onClick={() => setIsModalOpen(true)}>다시 열기</button>
+        <button className={styles.reloadButton} onClick={() => setIsModalOpen(true)}>다시 열기</button>
       </div>;
     }
     else return;
   };
 
-  
-  
-  
 
   const handleImgUpload = (event) => {
     const file = event.target.files[0];
@@ -52,13 +53,21 @@ function FileUploadButton() {
       .finally(()=> {
         setIsLoading(false);
       });
+
+      setSelectedFileName(file.name);
     }
+  };
+
+  const openFileDialog = () => {
+    fileInputRef.current.click();
   };
 
   return (
     <div>
     <div>
-      <input type="file" onChange={handleImgUpload} />
+      <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleImgUpload} />
+      {selectedFileName && <p><b><br />{selectedFileName}</b></p>}
+      <button className={styles.uploadButton} onClick={openFileDialog}>파일 선택</button>
       {isLoading ? (
         <div><BeatLoader /></div>
       ) : (

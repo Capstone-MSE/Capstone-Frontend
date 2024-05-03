@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import styles from './keyValue.module.css'
 
 
 const KeyValue = ({ AiTextData, coloredIndexes, onChange, coloredBbox }) => {
@@ -43,29 +44,39 @@ const KeyValue = ({ AiTextData, coloredIndexes, onChange, coloredBbox }) => {
     return (
         <div>
         <div>
-            <input 
-            type="text"
-            value={inputValue}
-            onChange={handleChange} 
-            />
-            <button onClick={submit}>완료</button> 
+            <label>
+            <h2 className={`${styles.element}`}><b>Key: </b>
+                <input className={`${styles.form}`}
+                type="text"
+                value={inputValue}
+                onChange={handleChange} 
+                />
+                <button className={`${styles.submitButton}`} onClick={submit}>입력</button> 
+            </h2>
+            </label>
         </div>
         <div>
             {key && (
-                <input
-                type="text"
-                value={value}
-                onChange={onChange}
+                <label>
+                <h2 className={`${styles.element}`}><b>Value: </b>
+                    <input className={`${styles.form}`}
+                    type="text"
+                    value={value}
+                    onChange={onChange}
                 />
+                {key && <button className={`${styles.submitButton}`} onClick={addPair}>추가</button>}
+                </h2>
+                </label>
             )}
-            {key && <button onClick={addPair}>더하기</button>}
         </div>
-        {key && <p>Key: {key}</p>}
-        {key && value && <p> Value: {value}</p>}
+        <div className={styles.container}>  
+            {key && <b>Key: {key}<br/></b>}
+            {key && value && <b> Value: {value}<br/></b>}
+        </div>
         {keyValuePair.length > 0 && (
-            <div>
+            <div className={styles.align}>
                 {keyValuePair.map((pair, index) => (
-                    <p key={index}>Key: {pair.key}, Value: {pair.value}</p>
+                    <b key={index}>Key: {pair.key}, Value: {pair.value}<br/></b>
                 ))}
             </div>
         )}

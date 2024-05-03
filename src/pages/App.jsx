@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import Signup from './Signup.js';
+import Signup from './Signup.jsx';
 import Login from './Login.jsx';
-import Categories from '../components/Categories.js';
+//import Categories from '../components/Categories.js';
 import MainPage from './MainPage';
 import LearnPage from './Learn';
 import Chat  from './Chat.jsx'

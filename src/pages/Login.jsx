@@ -1,6 +1,20 @@
 import React, { useState } from "react";
+import styles from './Login.module.css'; 
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
+
+  const navigate = useNavigate();
+
+  const mainClick = () => {
+    navigate('/');
+  };
+
+  const signUpClick = () => {
+    navigate('/signup');
+  };
+  
+  
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -25,14 +39,11 @@ function Login() {
         body: JSON.stringify({ username, password })
       });
 
-      if (response.ok) {
-<<<<<<< Updated upstream:src/pages/Login.jsx
-        const data = await response.json();
+
+      if (response.ok) { const data = await response.json();
         localStorage.setItem('authToken', data.token);
         console.log('로그인 성공:', data);
-=======
-        console.log('로그인 성공');
->>>>>>> Stashed changes:src/pages/Login.js
+
       } else {
         console.error('로그인 실패:', response.statusText);
       }
@@ -42,33 +53,42 @@ function Login() {
   };
 
   return (
-    <div>
-      <h2>로그인</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>
-            아이디:
-            <input
-              type="text"
-              value={username}
-              onChange={handleUsernameChange}
-              required
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            비밀번호:
-            <input
-              type="password"
-              value={password}
-              onChange={handlePasswordChange}
-              required
-            />
-          </label>
-        </div>
-        <button type="submit">로그인</button>
-      </form>
+    <div className={styles.container}>
+      <div className="header">
+          <button className={`${styles.mainbtn}`} onClick={mainClick}><h1>Reader.</h1></button>
+          <button className={`${styles.signbtn}`} onClick={signUpClick}>회원가입</button>
+      </div>
+      <div className={styles.card}>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label>
+            <h2 className={`${styles.element}`}><b>아이디: </b>
+              <input className={`${styles.form}`}
+                type="text"
+                value={username}
+                onChange={handleUsernameChange}
+                required
+              /></h2>
+            </label>
+          </div>
+          <div>
+            <label>
+              <h2 className={`${styles.element}`}>
+              <b>비밀번호: </b>
+              <input className={`${styles.form}`}
+                type="password"
+                value={password}
+                onChange={handlePasswordChange}
+                required
+              />
+              </h2>
+            </label>
+          </div>
+          <div>
+            <button className={`${styles.loginbtn}`} type="submit">로그인</button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

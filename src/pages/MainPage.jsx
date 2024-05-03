@@ -17,6 +17,10 @@ import './chatbot.css';
 
 const MainPage = () => {
     const navigate = useNavigate();
+
+    const refreshPage = () => {
+      window.location.reload();
+    };
     const learnClick = () => {
       navigate('/learn'); 
       };
@@ -30,26 +34,26 @@ const MainPage = () => {
       return (
         <div className={styles.container}>
           <div className="header">
-            <h1>Reader</h1>
-            <div className="buttons">
-              <button type="button" onClick={logInClick}>로그인</button>
-              <button type="button" onClick={signUpClick}>회원가입</button>
-            </div>
+            <button className={`${styles.mainbtn}`} onClick={refreshPage}><h1>Reader.</h1></button>
+            <button className={`${styles.loginbtn}`} onClick={logInClick}>로그인</button>
+            <button className={`${styles.signbtn}`} onClick={signUpClick}>회원가입</button>
           </div>
           <div className={styles.card}>
             <div className={styles.iconContainer}>
               <img src={upload_icon} alt="Upload" className={styles.icon} />
             </div>
-            <p>첫 사용이신가요?</p>
-            <p>데이터화할 이미지를 업로드해 학습을 진행해주세요.</p>
-            <button className={`${styles.btn} ${styles.learn}`} onClick={learnClick}>학습하기</button>
+            <h2><b>처음 사용하시나요?</b></h2>
+            <p>데이터화할 이미지를 업로드해</p>
+            <p>학습을 진행해주세요.</p>
+            <button className={`${styles.btn}`} onClick={learnClick}>학습하기</button>
           </div>
           <div className={styles.card}>
             <div className={styles.iconContainer}>
               <img src={download_icon} alt="Download" className={styles.icon} />
             </div>
-            <p>이미지를 통해 데이터를 추출하세요.</p>
-            <button className={`${styles.btn} ${styles.extract}`} onClick={() => navigate('/extract')}>추출하기</button>
+            <h2><b>기존 사용자이신가요?</b></h2>
+            <p>이미지를 등록해</p> <p>데이터를 추출하세요.</p>
+            <button className={`${styles.btn}`} onClick={() => navigate('/extract')}>추출하기</button>
           </div>
           <Chatbot
             config={config}
