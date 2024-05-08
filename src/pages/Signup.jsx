@@ -17,6 +17,7 @@ function Signup() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [signupToken, setSignupToken] = useState('');
+  
 
   useEffect(() => {
     // 회원가입 토큰 요청
@@ -55,13 +56,15 @@ function Signup() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ name, username, password })
-      });
+        body: JSON.stringify({ name:name, nickname:username, password:password })
+      })
+      const result = await response.json();
 
       if (response.ok) {
-        console.log('회원가입 성공');
+        alert('회원가입 성공');
+        navigate('/');
       } else {
-        console.error('회원가입 실패:', response.statusText);
+        alert(result.message[0]);
       }
     } catch (error) {
       console.error('회원가입 실패:', error);

@@ -31,21 +31,22 @@ function Login() {
 
     try {
       // 로그인 요청
-      const response = await fetch(`http://mobilesystems.site:8081/login`, {
+      const response = await fetch(`http://mobilesystems.site:8081/user/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ username, password })
-      });
+        body: JSON.stringify({ nickname:username, password:password })
+      })
 
+      const result = await response.json();
 
-      if (response.ok) { const data = await response.json();
-        localStorage.setItem('authToken', data.token);
-        console.log('로그인 성공:', data);
-
+      if (response.ok) { 
+        localStorage.setItem('authToken', result.token);
+        alert('로그인 성공');
+        navigate('/');
       } else {
-        console.error('로그인 실패:', response.statusText);
+        alert(result.message);
       }
     } catch (error) {
       console.error('로그인 실패:', error);
