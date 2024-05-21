@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './MainPage.module.css'; 
 import { useNavigate } from 'react-router-dom';
 import upload_icon from '../img/upload_icon.png';
 import download_icon from '../img/download_icon.png'
+import { getCookie, removeCookie } from '../utils/CookieUtil';
 
 import Chatbot from 'react-chatbot-kit'; 
 import 'react-chatbot-kit/build/main.css';
@@ -12,7 +13,6 @@ import MessageParser from '../chatbot/MessageParser';
 import ActionProvider from '../chatbot/ActionProvider';
 
 import './chatbot.css';
-
 
 
 const MainPage = () => {
@@ -31,12 +31,38 @@ const MainPage = () => {
       navigate('/signup');
     };
 
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+      const accessToken = getCookie("token");
+      if (accessToken && localStorage.getItem('accessToken', accessToken)) {
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
+      }
+      
+    }, []);
+
+    const handleLogout = () => {
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      removeCookie("token");
+      setIsLoggedIn(false);
+      alert('로그아웃 되었습니다.');
+    };
+
       return (
         <div className={styles.container}>
           <div className="header">
             <button className={`${styles.mainbtn}`} onClick={refreshPage}><h1>Reader.</h1></button>
+            {isLoggedIn ? ( 
+            <button className={`${styles.signbtn}`} onClick={handleLogout}>로그아웃</button>
+            ) : (
             <button className={`${styles.loginbtn}`} onClick={logInClick}>로그인</button>
+            )}
+            {!isLoggedIn && (
             <button className={`${styles.signbtn}`} onClick={signUpClick}>회원가입</button>
+            )}
           </div>
           <div className={styles.card}>
             <div className={styles.iconContainer}>
