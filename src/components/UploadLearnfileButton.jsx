@@ -76,7 +76,7 @@ const UploadLearnfileButton = () => {
       const formData = new FormData();
       formData.append("file", file);
 
-      console.log(`Uploading ${file.name}...`); // 업로드 중인 파일 이름을 콘솔에 출력
+      console.log(`Uploading ${file.name}...`); 
 
       try {
         const response = await fetch(
