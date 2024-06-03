@@ -51,8 +51,16 @@
 // export default UploadLearnfileButton;
 
 import React, { useState } from "react";
+import styles from './UploadLearnfileButton.module.css';
+import { useNavigate } from 'react-router-dom';
 
 const UploadLearnfileButton = () => {
+
+  const navigate = useNavigate();
+  const mainClick = () => {
+    navigate('/');
+  };
+
   const [files, setFiles] = useState([]);
 
   const handleFileChange = (event) => {
@@ -108,9 +116,14 @@ const UploadLearnfileButton = () => {
   };
 
   return (
-    <div>
-      <input type="file" multiple onChange={handleFileChange} />
-      <button onClick={handleUpload}>Upload</button>
+    <div className={styles.container}>
+      <div className="header">
+          <button className={`${styles.mainbtn}`} onClick={mainClick}><h1>Reader.</h1></button>
+      </div>
+      <div className={styles.card}>
+        <input type="file" multiple onChange={handleFileChange} />
+        <button onClick={handleUpload}>Upload</button>
+      </div>
     </div>
   );
 };
