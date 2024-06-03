@@ -3,7 +3,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import KeyValue from './KeyValue';
 import close_icon from '../img/close.png';
 
-
 function Modal({ isOpen, onClose, AiData, selectedFileName}) {
 
   const [resizeFactor, setResizeFactor] = useState(null);

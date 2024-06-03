@@ -72,8 +72,7 @@ function FileUploadButton() {
       <button className={styles.uploadButton} onClick={openFileDialog}>파일 선택</button>
       {isLoading ? (
         <div><BeatLoader /></div>
-      ) : (
-        <Modal isOpen={isModalOpen} onClose={closeModal} AiData={aiResponse} selectedFileName = {selectedFileName}>
+      ) : (<Modal isOpen={isModalOpen} onClose={closeModal} AiData={aiResponse} selectedFileName = {selectedFileName}>
         </Modal>
         )
     } 

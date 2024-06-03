@@ -30,6 +30,9 @@ const MainPage = () => {
     const signUpClick = () => {
       navigate('/signup');
     };
+    const exportClick = () => {
+      navigate('/export');
+    };
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -47,6 +50,7 @@ const MainPage = () => {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
       localStorage.removeItem('decodedToken');
+
       removeCookie("token");
       setIsLoggedIn(false);
       alert('로그아웃 되었습니다.');
@@ -80,7 +84,7 @@ const MainPage = () => {
             </div>
             <h2><b>기존 사용자이신가요?</b></h2>
             <p>이미지를 등록해</p> <p>데이터를 추출하세요.</p>
-            <button className={`${styles.btn}`} onClick={() => navigate('/extract')}>추출하기</button>
+            <button className={`${styles.btn}`} onClick={exportClick}>추출하기</button>
           </div>
           <Chatbot
             config={config}

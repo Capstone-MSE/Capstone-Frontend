@@ -57,7 +57,7 @@ const KeyValue = ({ AiTextData, coloredIndexes, onChange, coloredBbox, AiData, s
         const array = []; 
         for (let i = 0; i < binary.length; i++) {
             array.push(binary.charCodeAt(i));
-        }   // 이진 데이터를 8비트 부호 없는 정수 배열로 변환
+        }   
 
         const imgblob = new Blob([new Uint8Array(array)], { type: 'image/jpeg' });
         const jsonblob = new Blob([JSON.stringify(jsondata)], { type: 'application/json' });
