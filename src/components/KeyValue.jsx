@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import styles from './keyValue.module.css'
-import AWS from "aws-sdk";
-
 
 
 const KeyValue = ({ AiTextData, coloredIndexes, onChange, coloredBbox, AiData, selectedFileName }) => {
     const [inputValue, setInputValue] = useState('');
     const [key, setKey] = useState('');
     const [keyValuePair, setKeyValuePair] = useState([]);
-    const [labelPair, setlabelPair] = useState([]);
+    const [labelPair, setLabelPair] = useState([]);
     const [value, setValue] = useState('');
     
-
     const sortedIndexes = [...coloredIndexes].sort((a, b) => a - b);
-    // const value = sortedIndexes.map(index => AiTextData[index]).join(' ');
 
     const calculateValue = () => {
         return sortedIndexes.map(index => AiTextData[index]).join(' ');
@@ -35,7 +31,7 @@ const KeyValue = ({ AiTextData, coloredIndexes, onChange, coloredBbox, AiData, s
     const addPair = () => {
         const index = { val: sortedIndexes };
         const key_name = key;
-        setlabelPair(prevState => [...prevState, { key_name, index }]);
+        setLabelPair(prevState => [...prevState, { key_name, index }]);
         setKeyValuePair(prevState => [...prevState, { key, value }]);
         setKey('');
         setInputValue('');
@@ -44,126 +40,49 @@ const KeyValue = ({ AiTextData, coloredIndexes, onChange, coloredBbox, AiData, s
         console.log(keyValuePair);
     };
 
-    const saveToS3 = () => {
-        const REGION = process.env.REACT_APP_REGION;
-        const ACESS_KEY_ID = process.env.REACT_APP_ACCESS_KEY_ID;
-        const SECRET_ACESS_KEY_ID = process.env.REACT_APP_SECRET_ACCESS_KEY;
-        const BUCKET_NAME = process.env.REACT_APP_BUCKET_NAME;
-        const userId = localStorage.getItem('userId')
-
-        AWS.config.update({
-            region: REGION,
-            accessKeyId: ACESS_KEY_ID,
-            secretAccessKey: SECRET_ACESS_KEY_ID,
-
-        });
-
-        const s3 = new AWS.S3();
+    const saveToAPI = () => {
+        const userId = localStorage.getItem('userId');
         const date = Date.now();
 
-        let jsonUploaded = false;
-        let imgUploaded = false;
-
-        //  json S3 업로드
-        const jsonfile = `file_${date}.json`;
         const jsondata = {
             word_list: AiData.content.text,
             bbox_list: AiData.content.bbox,
             label: labelPair,
             file_name: selectedFileName,
-            
         };
 
-        const jsonparams = {
-            ACL: 'private',
-            Bucket: BUCKET_NAME,
-            Key: `${userId}/${jsonfile}`,
-            Body: JSON.stringify(jsondata),
-            ContentType: 'application/json',
-        };
-        
-        s3.upload(jsonparams, (err, s3Data) => {
 
-            console.log('data:', jsondata);
+        const imgdata = AiData.content.image;
+        const binary = atob(imgdata);   //이진 데이터로 디코딩
+        const array = []; 
+        for (let i = 0; i < binary.length; i++) {
+            array.push(binary.charCodeAt(i));
+        }   // 이진 데이터를 8비트 부호 없는 정수 배열로 변환
 
-            if (err) {
-                console.log('S3 업로드 오류: json', err);
-            } else {
-                console.log('S3 업로드 성공: json', s3Data);
+        const imgblob = new Blob([new Uint8Array(array)], { type: 'image/jpeg' });
+        const jsonblob = new Blob([JSON.stringify(jsondata)], { type: 'application/json' });
 
-                const blob = new Blob([JSON.stringify(jsondata)], { type: 'application/json' });
-                const formdata = new FormData();
-                formdata.append("profile_photo", blob, jsonfile);
-                
-                const requestOptions = {
-                    method: 'POST',
-                    body: formdata,
-                    mode: 'no-cors',
-                    redirect: 'follow'
-                };
+        const formdata = new FormData();
+        formdata.append("profile_photos", jsonblob, `file_${date}.json`);
+        formdata.append("profile_photos", imgblob, `file_${date}.jpg`);
 
-                jsonUploaded = true;
-                checkAllUploaded();
-                
-                fetch(`http://18.232.193.248:8080/${userId}/photo`, requestOptions)
-                .then(response => response.text())
-                .then(result => console.log(result))
-                .catch(error => console.log('error', error));
-            }
-        });
-        
-        //  이미지 S3 업로드
-        const imgfile = `file_${date}.jpg`;
-        const imgBase64 = `data:image/jpeg;base64,${AiData.content.image}`;
-
-        fetch(imgBase64)
-        .then(res => res.blob())
-        .then(blob => {
-            const imgparams = {
-                ACL: 'private',
-                Bucket: BUCKET_NAME,
-                Key: `${userId}/${imgfile}`,
-                Body: blob,
-                ContentType: 'image/jpeg',
-            };
-
-            s3.upload(imgparams, (err, s3Data) => {
-                if (err) {
-                    console.log('S3 업로드 오류: 이미지', err);
-                } else {
-                    console.log('S3 업로드 성공: 이미지', s3Data);
-
-                    const formdata = new FormData();
-                    formdata.append("profile_photo", blob, imgfile);
-
-                    const requestOptions = {
-                        method: 'POST',
-                        body: formdata,
-                        mode: 'no-cors',
-                        redirect: 'follow'
-                    };
-
-                    imgUploaded = true;
-                    checkAllUploaded();
-
-                    fetch(`http://18.232.193.248:8080/${userId}/photo`, requestOptions)
-                        .then(response => response.text())
-                        .then(result => console.log(result))
-                        .catch(error => console.log('error', error));
-                }
-            });
+        fetch(`http://18.232.193.248:8080/${userId}/photos`, {
+            method: 'POST',
+            body: formdata,
+            mode: 'no-cors',
+            redirect: 'follow',
+        })
+        .then(response => response.text())
+        .then(result => {
+            console.log(result);
+            alert('성공적으로 저장되었습니다.');
         })
         .catch(error => {
-            console.log('Base64 인코딩 에러:', error);
+            console.error('Error:', error);
         });
 
-        const checkAllUploaded = () => {
-            if (jsonUploaded && imgUploaded) {
-                alert('성공적으로 저장되었습니다.');
-            }
-        };
 
-        }
+    };
 
 
 
@@ -210,7 +129,7 @@ const KeyValue = ({ AiTextData, coloredIndexes, onChange, coloredBbox, AiData, s
         <button 
             className={`${styles.saveButton}`}
             type="button"  
-            onClick={saveToS3}>저장하기</button>
+            onClick={saveToAPI}>저장하기</button>
         </div>
     );
 };
