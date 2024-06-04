@@ -9,7 +9,7 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
       requestBody.append("user_id", "test");
       requestBody.append("prompt", message || "매출 분석해줄래?");
 
-      console.log("Request Body:", requestBody.toString()); // 요청 본문 확인
+      console.log("Request Body:", requestBody.toString());
 
       const response = await fetch("http://100.25.242.208:8080/ai/chat", {
         method: "POST",

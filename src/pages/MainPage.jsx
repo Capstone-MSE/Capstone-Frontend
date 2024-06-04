@@ -5,9 +5,9 @@ import upload_icon from "../img/upload_icon.png";
 import download_icon from "../img/download_icon.png";
 import { getCookie, removeCookie } from "../utils/CookieUtil";
 import UploadLearnfileButton from "../components/UploadLearnfileButton";
-import Chatbot from "react-chatbot-kit";
 import "react-chatbot-kit/build/main.css";
 
+import Chatbot from "react-chatbot-kit";
 import config from "../chatbot/config";
 import MessageParser from "../chatbot/MessageParser";
 import ActionProvider from "../chatbot/ActionProvider";
@@ -28,6 +28,9 @@ const MainPage = () => {
   };
   const signUpClick = () => {
     navigate("/signup");
+  };
+  const chatBotClick = () => {
+    navigate("/chatbot");
   };
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -69,6 +72,9 @@ const MainPage = () => {
             회원가입
           </button>
         )}
+        {/* <button className={`${styles.chatbotbtn}`} onClick={chatBotClick}>
+          챗봇
+        </button> */}
         <UploadLearnfileButton />
       </div>
       <div className={styles.card}>
@@ -99,11 +105,11 @@ const MainPage = () => {
           추출하기
         </button>
       </div>
-      <Chatbot
+      {/* <Chatbot
         config={config}
         messageParser={MessageParser}
         actionProvider={ActionProvider}
-      />
+      /> */}
     </div>
   );
 };
