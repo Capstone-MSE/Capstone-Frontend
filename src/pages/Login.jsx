@@ -57,15 +57,14 @@ function Login() {
           sameSite: "strict",
         });
 
-        console.log(result);
-
-        alert("로그인 성공");
+        alert(result.name + "님 환영합니다!");
         navigate("/");
 
       } else {
         alert(result.message);
       }
     } catch (error) {
+      alert("아이디 및 비밀번호를 확인해주세요.");
       console.error("로그인 실패:", error);
     }
   };

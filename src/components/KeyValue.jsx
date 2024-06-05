@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BeatLoader } from 'react-spinners';
 import styles from './keyValue.module.css'
 import FinishLearnButton from "./finishLearnButton";
 
@@ -10,6 +11,7 @@ const KeyValue = ({ AiTextData, coloredIndexes, onChange, coloredBbox, AiData, s
     const [labelPair, setLabelPair] = useState([]);
     const [value, setValue] = useState('');
     const [isSaved, setIsSaved] = useState(false);
+    const [isUploading, setIsUploading] = useState(false);
 
     const sortedIndexes = [...coloredIndexes].sort((a, b) => a - b);
 
@@ -46,6 +48,8 @@ const KeyValue = ({ AiTextData, coloredIndexes, onChange, coloredBbox, AiData, s
         const userId = localStorage.getItem("userID");
         const date = Date.now();
 
+        setIsUploading(true);
+
         const jsondata = {
             word_list: AiData.content.text,
             bbox_list: AiData.content.bbox,
@@ -78,6 +82,7 @@ const KeyValue = ({ AiTextData, coloredIndexes, onChange, coloredBbox, AiData, s
         .then(result => {
             console.log(result);
             alert('키값 쌍이 성공적으로 저장되었습니다. 완성 버튼을 눌러 학습을 시작해주세요.');
+            setIsUploading(false);
             setIsSaved(true);
         })
         .catch(error => {
@@ -133,11 +138,20 @@ const KeyValue = ({ AiTextData, coloredIndexes, onChange, coloredBbox, AiData, s
         {isSaved ? (
             <FinishLearnButton>업로드</FinishLearnButton>
             ) : (
-            <button 
-                className={`${styles.saveButton}`}
-                type="button"  
-                onClick={saveToAPI}>저장하기
-            </button>
+                <div>
+                    {isUploading ? (
+                        <div>
+                            <br/>
+                            <BeatLoader />
+                        </div>
+                    ) : (
+                        <button 
+                            className={`${styles.saveButton}`}
+                            type="button"  
+                            onClick={saveToAPI}>저장하기
+                        </button>
+                    )}
+                    </div>
         )}
         
         </div>
