@@ -38,7 +38,7 @@ const MainPage = () => {
 
     useEffect(() => {
       const accessToken = getCookie("token");
-      if (accessToken && localStorage.getItem('accessToken', accessToken)) {
+      if (accessToken && localStorage.getItem("accessToken", accessToken)) {
         setIsLoggedIn(true);
       } else {
         setIsLoggedIn(false);
@@ -47,9 +47,9 @@ const MainPage = () => {
     }, []);
 
     const handleLogout = () => {
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
-      localStorage.removeItem('decodedToken');
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("userID");
 
       removeCookie("token");
       setIsLoggedIn(false);
