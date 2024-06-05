@@ -50,16 +50,12 @@
 
 // export default UploadLearnfileButton;
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styles from './UploadLearnfileButton.module.css';
-import { useNavigate } from 'react-router-dom';
 
 const UploadLearnfileButton = () => {
 
-  const navigate = useNavigate();
-  const mainClick = () => {
-    navigate('/');
-  };
+  const fileInputRef = useRef(null);
 
   const [files, setFiles] = useState([]);
 
@@ -71,6 +67,7 @@ const UploadLearnfileButton = () => {
   };
 
   const handleUpload = async () => {
+
     const accessToken = localStorage.getItem("accessToken");
     const userID = localStorage.getItem("userID");
 
@@ -115,15 +112,27 @@ const UploadLearnfileButton = () => {
     }
   };
 
+  const openFileDialog = () => {
+    fileInputRef.current.click();
+  };
+
   return (
-    <div className={styles.container}>
-      <div className="header">
-          <button className={`${styles.mainbtn}`} onClick={mainClick}><h1>Reader.</h1></button>
-      </div>
-      <div className={styles.card}>
-        <input type="file" multiple onChange={handleFileChange} />
-        <button onClick={handleUpload}>Upload</button>
-      </div>
+    <div>
+      <input type="file" ref={fileInputRef} style={{ display: 'none' }} multiple onChange={handleFileChange} />
+      <button className={styles.btn} onClick={openFileDialog}>파일선택</button>
+      {files.length > 0 && (
+        <>
+          {/*<div className={styles.fileList}>
+            {files.map((file, index) => (
+              <div key={index}>{file.name}</div>
+            ))}
+          </div>*/}
+          <button className={styles.btn} onClick={handleUpload}>
+            업로드
+          </button>
+        </>
+      )}
+
     </div>
   );
 };

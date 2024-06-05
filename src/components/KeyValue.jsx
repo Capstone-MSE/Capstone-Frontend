@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './keyValue.module.css'
+import FinishLearnButton from "./finishLearnButton";
 
 
 const KeyValue = ({ AiTextData, coloredIndexes, onChange, coloredBbox, AiData, selectedFileName }) => {
@@ -8,7 +9,8 @@ const KeyValue = ({ AiTextData, coloredIndexes, onChange, coloredBbox, AiData, s
     const [keyValuePair, setKeyValuePair] = useState([]);
     const [labelPair, setLabelPair] = useState([]);
     const [value, setValue] = useState('');
-    
+    const [isSaved, setIsSaved] = useState(false);
+
     const sortedIndexes = [...coloredIndexes].sort((a, b) => a - b);
 
     const calculateValue = () => {
@@ -75,7 +77,8 @@ const KeyValue = ({ AiTextData, coloredIndexes, onChange, coloredBbox, AiData, s
         .then(response => response.text())
         .then(result => {
             console.log(result);
-            alert('성공적으로 저장되었습니다.');
+            alert('키값 쌍이 성공적으로 저장되었습니다. 완성 버튼을 눌러 학습을 시작해주세요.');
+            setIsSaved(true);
         })
         .catch(error => {
             console.error('Error:', error);
@@ -98,6 +101,7 @@ const KeyValue = ({ AiTextData, coloredIndexes, onChange, coloredBbox, AiData, s
                 onChange={handleChange} 
                 />
                 <button className={`${styles.submitButton}`} onClick={submit}>입력</button> 
+                
             </h2>
             </label>
         </div>
@@ -126,10 +130,16 @@ const KeyValue = ({ AiTextData, coloredIndexes, onChange, coloredBbox, AiData, s
                 ))}
             </div>
         )}
-        <button 
-            className={`${styles.saveButton}`}
-            type="button"  
-            onClick={saveToAPI}>저장하기</button>
+        {isSaved ? (
+            <FinishLearnButton>업로드</FinishLearnButton>
+            ) : (
+            <button 
+                className={`${styles.saveButton}`}
+                type="button"  
+                onClick={saveToAPI}>저장하기
+            </button>
+        )}
+        
         </div>
     );
 };
