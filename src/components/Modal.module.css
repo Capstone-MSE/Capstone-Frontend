@@ -23,6 +23,16 @@
     background-color: #ffff; 
 }
 
+.leftContainer img {
+  width: 800px;
+  height: 800px;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+
 .rightContainer {
   position: relative;
   margin-left: 40px;

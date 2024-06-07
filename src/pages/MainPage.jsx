@@ -14,6 +14,8 @@ import ActionProvider from '../chatbot/ActionProvider';
 
 import './chatbot.css';
 
+import chatbot_icon from '../img/free-icon-chat.png';
+
 
 const MainPage = () => {
     const navigate = useNavigate();
@@ -35,6 +37,7 @@ const MainPage = () => {
     };
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [showChatbot, setShowChatbot] = useState(false);
 
     useEffect(() => {
       const accessToken = getCookie("token");
@@ -56,6 +59,10 @@ const MainPage = () => {
       alert('로그아웃 되었습니다.');
     };
 
+    const toggleChatbot = () => {
+      setShowChatbot(prev => !prev);
+    };
+
       return (
         <div className={styles.container}>
           <div className="header">
@@ -68,6 +75,8 @@ const MainPage = () => {
             {!isLoggedIn && (
             <button className={`${styles.signbtn}`} onClick={signUpClick}>회원가입</button>
             )}
+            <button className={`${styles.chatbotbtn}`} onClick={toggleChatbot}><img src={chatbot_icon} alt="챗봇" />
+            </button>
           </div>
           <div className={styles.card}>
             <div className={styles.iconContainer}>
@@ -86,11 +95,13 @@ const MainPage = () => {
             <p>이미지를 등록해</p> <p>데이터를 추출하세요.</p>
             <button className={`${styles.btn}`} onClick={extractClick}>추출하기</button>
           </div>
-          <Chatbot
-            config={config}
-            messageParser={MessageParser}
-            actionProvider={ActionProvider}
-          />
+            {showChatbot && (
+                <Chatbot
+                    config={config}
+                    messageParser={MessageParser}
+                    actionProvider={ActionProvider}
+                />
+            )}
         </div>
       );
     }      

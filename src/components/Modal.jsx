@@ -23,7 +23,7 @@ function Modal({ isOpen, onClose, AiData, selectedFileName}) {
       };
       img.src = `data:image/jpeg;base64,${AiData.content.image}`;
     }
-  }, [AiData]);
+  }, [AiData, resizeFactor]);
 
 
   useEffect(()=> {
@@ -103,7 +103,10 @@ function Modal({ isOpen, onClose, AiData, selectedFileName}) {
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
         <div className={styles.leftContainer}>
-          <img src={`data:image/jpeg;base64,${AiData.content.image}`} style={{ maxWidth: '100%', maxHeight: '100%' }} />
+        <img
+            src={`data:image/jpeg;base64,${AiData.content.image}`}
+            className={styles.image} alt="원본이미지" 
+          />
           <canvas ref={canvasRef} width="800" height="800" className={styles.canvasOverlay}></canvas>
         </div>
         <div className={styles.rightContainer}>

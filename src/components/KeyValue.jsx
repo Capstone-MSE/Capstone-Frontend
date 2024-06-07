@@ -81,7 +81,7 @@ const KeyValue = ({ AiTextData, coloredIndexes, onChange, coloredBbox, AiData, s
         .then(response => response.text())
         .then(result => {
             console.log(result);
-            alert('키값 쌍이 성공적으로 저장되었습니다. 완성 버튼을 눌러 학습을 시작해주세요.');
+            alert('정확도 향상을 위해 최소 5장의 사진에 대해 같은 작업을 진행하고 "완성" 버튼을 눌러주세요.');
             setIsUploading(false);
             setIsSaved(true);
         })

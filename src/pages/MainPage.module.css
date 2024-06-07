@@ -75,19 +75,6 @@
   background-color: #ffffff;
 }
 
-.chatbotbtn {
-  position: fixed;
-  top: 100px;
-  right: 220px;
-  border-radius: 20px;
-  padding: 10px 20px;
-  border: 3px solid #000;
-  border-radius: 20px;
-  color: #000;
-  font-weight: bold;
-  cursor: pointer;
-  background-color: #ffffff;
-}
 
 p {
   margin: 5px 0;
@@ -116,4 +103,22 @@ h1 {
   background-color: transparent;
   border: none;
   cursor: pointer;
+}
+
+.chatbotbtn {
+  position: fixed;
+  bottom: 40px;
+  right: 50px;
+  width: 80px;
+  height: 70px;
+  border: none;
+  cursor: pointer;
+  background-color: white; /* 배경색을 하얀색으로 설정 */
+  border-radius: 30%; /* 원형 버튼을 만들기 위해 추가 */
+}
+
+.chatbotbtn img {
+  width: 80%;
+  height: 80%;
+  object-fit: cover;
 }
