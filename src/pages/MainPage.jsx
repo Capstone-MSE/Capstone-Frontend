@@ -5,12 +5,8 @@ import upload_icon from "../img/upload_icon.png";
 import download_icon from "../img/download_icon.png";
 import { getCookie, removeCookie } from "../utils/CookieUtil";
 import UploadLearnfileButton from "../components/UploadLearnfileButton";
+import DownloadExcelButton from "../components/downloadExcelButton";
 import "react-chatbot-kit/build/main.css";
-
-import Chatbot from "react-chatbot-kit";
-import config from "../chatbot/config";
-import MessageParser from "../chatbot/MessageParser";
-import ActionProvider from "../chatbot/ActionProvider";
 
 import "./chatbot.css";
 
@@ -98,12 +94,15 @@ const MainPage = () => {
           <b>기존 사용자이신가요?</b>
         </h2>
         <p>이미지를 등록해</p> <p>데이터를 추출하세요.</p>
-        <button
-          className={`${styles.btn}`}
-          onClick={() => navigate("/extract")}
-        >
-          추출하기
-        </button>
+        <div>
+          <button
+            className={`${styles.btn}`}
+            onClick={() => navigate("/extract")}
+          >
+            추출하기
+          </button>
+          <DownloadExcelButton />
+        </div>
       </div>
       {/* <Chatbot
         config={config}

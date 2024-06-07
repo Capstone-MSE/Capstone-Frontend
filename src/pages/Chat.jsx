@@ -5,12 +5,11 @@ import "react-chatbot-kit/build/main.css";
 import config from "../chatbot/config";
 import MessageParser from "../chatbot/MessageParser";
 import ActionProvider from "../chatbot/ActionProvider";
-import "./Chat.module.css";
 import "./chatbot.css";
 
 const Chat = () => {
   return (
-    <div className="chatbot-container">
+    <div style={{ height: "100vh", width: "100vw" }}>
       <Chatbot
         config={config}
         messageParser={MessageParser}
