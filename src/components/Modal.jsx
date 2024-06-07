@@ -22,7 +22,7 @@ function Modal({ isOpen, onClose, AiData }) {
       };
       img.src = `data:image/jpeg;base64,${AiData.content.image}`;
     }
-  }, [AiData]);
+  }, [AiData, resizeFactor]);
 
   useEffect(() => {
     if (isOpen && AiData && resizeFactor) {
