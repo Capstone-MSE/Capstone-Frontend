@@ -7,13 +7,17 @@ const userID = localStorage.getItem("userID");
 class FinishLearnButton extends React.Component {
   handleClick = async () => {
     try {
+      const params = new URLSearchParams();
+      params.append("user_id", userID);
+
       const response = await fetch(`${serverURL}ai/train`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: JSON.stringify({ user_id: userID }),
+        body: params.toString(),
       });
+
       if (response.ok) {
         alert("모델 생성을 시작합니다. 생성까지 약 2시간 소요됩니다.");
       } else {
