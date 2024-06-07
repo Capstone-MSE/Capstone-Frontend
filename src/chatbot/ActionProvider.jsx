@@ -7,7 +7,7 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
     try {
       const requestBody = new URLSearchParams();
       requestBody.append("user_id", "test");
-      requestBody.append("prompt", message || "매출 분석해줄래?");
+      requestBody.append("prompt", message);
 
       console.log("Request Body:", requestBody.toString());
 
