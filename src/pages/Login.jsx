@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styles from "./Login.module.css"; 
 import { useNavigate } from "react-router-dom";
-import { setCookie } from "../utils/CookieUtil";
 import { jwtDecode } from "jwt-decode";
 
 function Login() {
@@ -47,15 +46,7 @@ function Login() {
 
       if (response.ok) {
         // 로컬 스토리지에 저장
-        localStorage.setItem("accessToken", result.accessToken);
-        localStorage.setItem("refreshToken", result.refreshToken);
         localStorage.setItem("userID", decodedToken.userId);
-
-        // 쿠키에 저장
-        setCookie("token", `JWT ${result.accessToken}`, {
-          path: "/",
-          sameSite: "strict",
-        });
 
         alert(result.name + "님 환영합니다!");
         navigate("/");

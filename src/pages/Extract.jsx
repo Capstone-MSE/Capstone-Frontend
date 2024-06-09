@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getCookie } from "../utils/CookieUtil";
 import styles from "./MainPage.module.css";
 import UploadLearnfileButton from "../components/UploadLearnfileButton";
 import upload_icon from "../img/upload_icon.png";
@@ -14,8 +13,7 @@ const ExtractPage = () => {
   };
 
   useEffect(() => {
-    const accessToken = getCookie("token");
-    if (!accessToken || !localStorage.getItem("accessToken", accessToken)) {
+    if (!localStorage.getItem("userID")) {
       navigate("/");
       alert("로그인 후 이용해주세요");
     }

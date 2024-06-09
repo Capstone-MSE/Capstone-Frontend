@@ -3,7 +3,6 @@ import styles from './MainPage.module.css';
 import { useNavigate } from 'react-router-dom';
 import upload_icon from '../img/upload_icon.png';
 import download_icon from '../img/download_icon.png'
-import { getCookie, removeCookie } from '../utils/CookieUtil';
 
 import Chatbot from 'react-chatbot-kit'; 
 import 'react-chatbot-kit/build/main.css';
@@ -40,8 +39,7 @@ const MainPage = () => {
     const [showChatbot, setShowChatbot] = useState(false);
 
     useEffect(() => {
-      const accessToken = getCookie("token");
-      if (accessToken && localStorage.getItem("accessToken", accessToken)) {
+      if (localStorage.getItem("userID")) {
         setIsLoggedIn(true);
       } else {
         setIsLoggedIn(false);
@@ -50,11 +48,7 @@ const MainPage = () => {
     }, []);
 
     const handleLogout = () => {
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
       localStorage.removeItem("userID");
-
-      removeCookie("token");
       setIsLoggedIn(false);
       alert('로그아웃 되었습니다.');
     };
