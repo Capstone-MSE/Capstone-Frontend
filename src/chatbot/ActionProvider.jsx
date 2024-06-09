@@ -7,7 +7,7 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
     try {
       const requestBody = new URLSearchParams();
       requestBody.append("user_id", "test");
-      requestBody.append("prompt", message || "매출 분석해줄래?");
+      requestBody.append("prompt", message);
 
       console.log("Request Body:", requestBody.toString());
 
@@ -38,7 +38,10 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
       }
 
       const reply = data.response;
+      const imageurl = data.image;
+
       console.log("Reply:", reply);
+      //console.log("Image:", imageurl);
 
       const botMessage = createChatBotMessage(reply);
 
@@ -46,6 +49,21 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
         ...prev,
         messages: [...prev.messages, botMessage],
       }));
+
+      if (imageurl) {
+        const uniqueKey = `image-widget-${Date.now()}`;
+        const imgMessage = { 
+          type: "bot", 
+          message: "Here's your image:", 
+          widget: "imageWidget", 
+          //widgetParams: { src: imageurl },
+          id: uniqueKey };
+
+        setState((prev) => ({
+          ...prev,
+          messages: [...prev.messages, imgMessage], imageurl
+        }));
+      }
     } catch (error) {
       console.error("API 호출 중 오류 발생:", error);
     }

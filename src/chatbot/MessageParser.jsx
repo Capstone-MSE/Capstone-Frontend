@@ -2,11 +2,7 @@ import React from "react";
 
 const MessageParser = ({ children, actions }) => {
   const parse = (message) => {
-    if (message.toLowerCase().includes("hello")) {
-      actions.handleMessage("hello");
-    } else {
-      actions.handleMessage(message);
-    }
+    actions.handleMessage(message);
   };
 
   return React.Children.map(children, (child) => {
