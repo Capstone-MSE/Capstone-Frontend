@@ -29,10 +29,6 @@ const UploadLearnfileButton = () => {
           {
             method: "POST",
             body: formData,
-            mode: "no-cors",
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
           }
         );
 

@@ -56,7 +56,7 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
           type: "bot",
           // message: "Here's your image:",
           widget: "imageWidget",
-          //widgetParams: { src: imageurl },
+          widgetParams: { src: imageurl },
           id: uniqueKey,
         };
 
