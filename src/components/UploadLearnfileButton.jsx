@@ -16,35 +16,34 @@ const UploadLearnfileButton = () => {
   const handleUpload = async () => {
     const accessToken = localStorage.getItem("accessToken");
     const userID = localStorage.getItem("userID");
+    const formData = new FormData();
 
     for (let file of files) {
-      const formData = new FormData();
-      formData.append("file", file);
-
+      formData.append("profile_photos", file);
       console.log(`Uploading ${file.name}...`);
+    }
 
-      try {
-        const response = await fetch(
-          `http://18.232.193.248:8080/${userID}/predict/photos`,
-          {
-            method: "POST",
-            body: formData,
-          }
-        );
-
-        if (response.ok) {
-          console.log(`${file.name} uploaded successfully`);
-        } else {
-          const errorText = await response.text();
-          console.error(
-            `Error uploading ${file.name}: ${response.statusText}`,
-            errorText
-          );
-          alert(`Error uploading ${file.name}: ${response.statusText}`);
+    try {
+      const response = await fetch(
+        `http://18.232.193.248:8080/${userID}/predict/photos`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: formData,
+          redirect: "follow",
+          mode: "no-cors",
         }
-      } catch (error) {
-        console.error(`Error uploading ${file.name}:`, error);
+      );
+
+      if (response.ok) {
+        console.log("업로드 성공:", await response.json());
+        alert("파일 업로드 성공");
       }
+    } catch (error) {
+      console.error("업로드 중 오류 발생:", error);
+      alert("업로드 중 오류가 발생했습니다.");
     }
   };
 
@@ -62,7 +61,7 @@ const UploadLearnfileButton = () => {
         onChange={handleFileChange}
       />
       <button className={styles.btn} onClick={openFileDialog}>
-        파일선택
+        파일 선택
       </button>
       {files.length > 0 && (
         <>
