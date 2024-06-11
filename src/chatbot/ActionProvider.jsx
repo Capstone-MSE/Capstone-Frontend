@@ -1,12 +1,12 @@
 import React from "react";
 
 const ActionProvider = ({ createChatBotMessage, setState, children }) => {
-  const userID = localStorage.getItem("userID") || "test";
+  const userID = localStorage.getItem("userID");
 
   const handleMessage = async (message) => {
     try {
       const requestBody = new URLSearchParams();
-      requestBody.append("user_id", "test");
+      requestBody.append("user_id", userID);
       requestBody.append("prompt", message);
 
       console.log("Request Body:", requestBody.toString());
