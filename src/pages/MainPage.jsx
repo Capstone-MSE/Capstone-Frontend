@@ -49,6 +49,7 @@ const MainPage = () => {
 
     const handleLogout = () => {
       localStorage.removeItem("userID");
+      localStorage.removeItem("acessToken");
       setIsLoggedIn(false);
       alert('로그아웃 되었습니다.');
     };

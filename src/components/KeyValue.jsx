@@ -75,7 +75,7 @@ const KeyValue = ({ AiTextData, coloredIndexes, onChange, coloredBbox, AiData, s
         fetch(`http://18.232.193.248:8080/${userId}/photos`, {
             method: 'POST',
             body: formdata,
-            mode: 'no-cors',
+           // mode: 'no-cors',
             redirect: 'follow',
         })
         .then(response => response.text())

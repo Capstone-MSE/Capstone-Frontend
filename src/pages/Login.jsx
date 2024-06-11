@@ -46,6 +46,7 @@ function Login() {
 
       if (response.ok) {
         // 로컬 스토리지에 저장
+        localStorage.setItem("accessToken",result.accessToken);
         localStorage.setItem("userID", decodedToken.userId);
 
         alert(result.name + "님 환영합니다!");
