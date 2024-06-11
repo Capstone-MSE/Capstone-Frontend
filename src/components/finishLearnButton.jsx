@@ -10,9 +10,9 @@ class FinishLearnButton extends React.Component {
       const response = await fetch(`${serverURL}ai/train`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: JSON.stringify({ user_id: userID }),
+        body: `user_id=${encodeURIComponent(userID)}`,
       });
       if (response.ok) {
         alert("모델 생성을 시작합니다. 생성까지 약 2시간 소요됩니다.");
