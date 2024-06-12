@@ -7,12 +7,15 @@ const userID = localStorage.getItem("userID");
 class DownloadExcelButton extends React.Component {
   handleClick = async () => {
     try {
+      const formBody = new URLSearchParams();
+      formBody.append("user_id", userID);
+
       const response = await fetch(`${serverURL}ai/predict`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: JSON.stringify({ user_id: userID }),
+        body: formBody.toString(),
       });
 
       const blob = await response.blob();
