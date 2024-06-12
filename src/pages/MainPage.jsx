@@ -58,6 +58,10 @@ const MainPage = () => {
       setShowChatbot(prev => !prev);
     };
 
+    const denyChatbot = () => {
+      alert("로그인 후 이용해주세요.");
+    }
+
       return (
         <div className={styles.container}>
           <div className="header">
@@ -70,8 +74,11 @@ const MainPage = () => {
             {!isLoggedIn && (
             <button className={`${styles.signbtn}`} onClick={signUpClick}>회원가입</button>
             )}
-            <button className={`${styles.chatbotbtn}`} onClick={toggleChatbot}><img src={chatbot_icon} alt="챗봇" />
-            </button>
+            {isLoggedIn ? (
+            <button className={`${styles.chatbotbtn}`} onClick={toggleChatbot}><img src={chatbot_icon} alt="챗봇" /></button>
+            ) : (
+            <button className={`${styles.chatbotbtn}`} onClick={denyChatbot}><img src={chatbot_icon} alt="챗봇" /></button>
+            )}
           </div>
           <div className={styles.card}>
             <div className={styles.iconContainer}>
