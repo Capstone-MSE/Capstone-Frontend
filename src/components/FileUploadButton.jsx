@@ -34,7 +34,7 @@ function FileUploadButton() {
       setIsLoading(true);
       const formData = new FormData();
       formData.append('file', file);
-      formData.append('token', 'DKU18son');
+      formData.append('token', 'Reader');
 
       const aiOcrURL = `${serverURL}ai/ocr`;
       fetch(aiOcrURL, {
