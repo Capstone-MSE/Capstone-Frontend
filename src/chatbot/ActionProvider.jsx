@@ -1,12 +1,12 @@
 import React from "react";
 
 const ActionProvider = ({ createChatBotMessage, setState, children }) => {
-  const userID = localStorage.getItem("userID") || "test";
+  const userID = localStorage.getItem("userID");
 
   const handleMessage = async (message) => {
     try {
       const requestBody = new URLSearchParams();
-      requestBody.append("user_id", "test");
+      requestBody.append("user_id", userID);
       requestBody.append("prompt", message);
 
       console.log("Request Body:", requestBody.toString());
@@ -41,21 +41,13 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
       const imageurl = data.image;
 
       console.log("Reply:", reply);
-      //console.log("Image:", imageurl);
-
-      const botMessage = createChatBotMessage(reply);
-
-      setState((prev) => ({
-        ...prev,
-        messages: [...prev.messages, botMessage],
-      }));
 
       if (imageurl) {
         const uniqueKey = `image-widget-${Date.now()}`;
         const imgMessage = {
           type: "bot",
-          // message: "Here's your image:",
           widget: "imageWidget",
+          message: "그래프는 다음과 같습니다.",
           widgetParams: { src: imageurl },
           id: uniqueKey,
         };
@@ -63,7 +55,15 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
         setState((prev) => ({
           ...prev,
           messages: [...prev.messages, imgMessage],
-          imageurl,
+        }));
+      }
+
+      if (reply) {
+        const botMessage = createChatBotMessage(reply);
+
+        setState((prev) => ({
+          ...prev,
+          messages: [...prev.messages, botMessage],
         }));
       }
     } catch (error) {
@@ -85,5 +85,3 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
 };
 
 export default ActionProvider;
-
-
