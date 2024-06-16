@@ -1,10 +1,9 @@
 import styles from './Modal.module.css';
 import React, { useState, useRef, useEffect } from 'react';
 import KeyValue from './KeyValue';
-import { BeatLoader } from 'react-spinners';
+import close_icon from '../img/close.png';
 
-
-function Modal({ isOpen, onClose, AiData}) {
+function Modal({ isOpen, onClose, AiData, selectedFileName}) {
 
   const [resizeFactor, setResizeFactor] = useState(null);
   const coloredBbox = useRef([]);
@@ -24,7 +23,7 @@ function Modal({ isOpen, onClose, AiData}) {
       };
       img.src = `data:image/jpeg;base64,${AiData.content.image}`;
     }
-  }, [AiData]);
+  }, [AiData, resizeFactor]);
 
 
   useEffect(()=> {
@@ -104,15 +103,18 @@ function Modal({ isOpen, onClose, AiData}) {
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
         <div className={styles.leftContainer}>
-          <img src={`data:image/jpeg;base64,${AiData.content.image}`} style={{ maxWidth: '100%', maxHeight: '100%' }} />
+        <img
+            src={`data:image/jpeg;base64,${AiData.content.image}`}
+            className={styles.image} alt="원본이미지" 
+          />
           <canvas ref={canvasRef} width="800" height="800" className={styles.canvasOverlay}></canvas>
         </div>
         <div className={styles.rightContainer}>
           <div>
-              <KeyValue AiTextData={AiData.content.text} coloredIndexes={coloredBbox.current} value={value} onChange={handleChange} coloredBbox={coloredBbox}/>
+              <KeyValue AiTextData={AiData.content.text} coloredIndexes={coloredBbox.current} value={value} onChange={handleChange} coloredBbox={coloredBbox} AiData={AiData} selectedFileName={selectedFileName}/>
           </div>
           <div>
-             <button className={styles.closeButton} onClick={onClose}>닫기</button>
+             <button className={styles.closeButton} onClick={onClose}><img src={close_icon} alt="닫기" /></button>
           </div>
         </div>
       </div>
